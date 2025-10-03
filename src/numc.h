@@ -1,4 +1,8 @@
 #pragma once
 
-#include "common/common.hpp"
 #include "include.hpp"
+
+// Common
+
+#include "common/complex.hpp"
+#include "common/constants.hpp"

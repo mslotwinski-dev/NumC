@@ -1,2 +1,4 @@
 add_executable(example_complex complex.cpp)
+add_executable(example_vectors vectors.cpp)
 target_link_libraries(example_complex PRIVATE numc)
+target_link_libraries(example_vectors PRIVATE numc)

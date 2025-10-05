@@ -1,8 +1,6 @@
 #pragma once
 
-#include <cmath>
-#include <iostream>
-#include <type_traits>
+#include "../inc.hpp"
 
 namespace numc {
 

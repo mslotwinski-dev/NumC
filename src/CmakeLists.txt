@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(numc
     common/complex.cpp
+    common/vector.cpp
 )
 
 target_include_directories(numc

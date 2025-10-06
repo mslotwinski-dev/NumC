@@ -22,20 +22,25 @@ class vector {
 
   ~vector();
 
-  // vector operator+(const vector& other) const;
-  // vector operator-(const vector& other) const;
-  // vector operator*(const vector& other) const;
-  // vector operator&(const vector& other) const;
+  vector operator+(const vector& other) const;
+  vector operator-(const vector& other) const;
+  double operator*(const vector& other) const;
+  vector operator^(const vector& other) const;
 
-  // // vector operator+(double scalar) const;
-  // // vector operator-(double scalar) const;
-  // vector operator*(double scalar) const;
-  // vector operator/(double scalar) const;
+  vector operator+=(const vector& other) const;
+  vector operator-=(const vector& other) const;
+  vector operator^=(const vector& other) const;
 
-  // double& operator[](size_t index);
-  // const double& operator[](size_t index) const;
+  // vector operator+(double scalar) const;
+  // vector operator-(double scalar) const;
 
-  // inline size_t get_size() const { return size; }
+  vector operator*(double scalar) const;
+  vector operator/(double scalar) const;
+
+  double& operator[](size_t index);
+  const double& operator[](size_t index) const;
+
+  inline size_t size() const { return size; }
 
   // double norm() const;
 

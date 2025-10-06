@@ -7,10 +7,10 @@ int main() {
   complex z1 = 3 + 4 * i;
   complex z2 = 1 + 2 * i;
 
-  complex z3 = z1 + z2;                  // Addition
-  complex z4 = !z3;                      // Conjugate
-  complex z5 = z1 ^ z2;                  // Exponentiation
-  complex z6 = (e ^ (pi * i)).round(5);  // Euler's formula
+  complex z3 = z1 + z2;         // Addition
+  complex z4 = ~z3;             // Conjugate
+  complex z5 = z1 ^ z2;         // Exponentiation
+  complex z6 = (e ^ (pi * i));  // Euler's formula
 
   std::cout << "Complex number created! z1 = " << z1 << std::endl;  // Complex number created! z1 = 3 + 4i
   std::cout << "Complex number created! z2 = " << z2 << std::endl;  // Complex number created! z2 = 1 + 2i

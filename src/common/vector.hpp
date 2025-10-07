@@ -1,12 +1,13 @@
 #pragma once
 
 #include "../inc.hpp"
+#include "../utility/log.hpp"
 
 namespace numc {
 
 class vector {
   double* data;
-  size_t size;
+  size_t _size;
 
  public:
   vector();
@@ -40,7 +41,7 @@ class vector {
   double& operator[](size_t index);
   const double& operator[](size_t index) const;
 
-  inline size_t size() const { return size; }
+  inline size_t size() const { return _size; }
 
   // double norm() const;
 

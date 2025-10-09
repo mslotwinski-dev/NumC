@@ -69,6 +69,66 @@ vector vector::operator^(const vector& other) const {
 
   return {result_1, result_2, result_3};
 }
+// Assigments
+
+vector& vector::operator+=(const vector& other) const {
+  *this = *this + other;
+  return *this;
+}
+
+vector& vector::operator-=(const vector& other) const {
+  *this = *this - other;
+  return *this;
+}
+
+vector& vector::operator^=(const vector& other) const {
+  *this = *this ^ other;
+  return *this;
+}
+
+// Scalar operations
+
+vector vector::operator*(double scalar) const {
+  vector result(this->size());
+  for (size_t i = 0; i < this->size(); ++i) {
+    result[i] = (*this)[i] * scalar;
+  }
+  return result;
+}
+
+vector vector::operator/(double scalar) const {
+  if (scalar == 0.0) {
+    Log::Error("Division by zero.");
+    return vector();
+  }
+
+  vector result(this->size());
+  for (size_t i = 0; i < this->size(); ++i) {
+    result[i] = (*this)[i] / scalar;
+  }
+  return result;
+}
+
+vector operator*(double scalar, const vector& v) { return v * scalar; }
+
+// Other methods
+
+double vector::norm() const {
+  double sum = 0.0;
+  for (size_t i = 0; i < this->size(); ++i) {
+    sum += (*this)[i] * (*this)[i];
+  }
+  return std::sqrt(sum);
+}
+
+vector vector::normalize() const {
+  double n = this->norm();
+  if (n == 0.0) {
+    Log::Error("Cannot normalize a zero vector.");
+    return vector();
+  }
+  return *this / n;
+}
 
 // Display
 

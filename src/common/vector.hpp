@@ -11,15 +11,8 @@ class vector {
 
  public:
   vector();
-
   explicit vector(size_t size);
-
   vector(std::initializer_list<double> values);
-
-  //  // vector(const vector& other);
-  //  // vector(vector&& other) noexcept;
-  //  // vector& operator=(const vector& other);
-  //  // vector& operator=(vector&& other) noexcept;
 
   ~vector();
 
@@ -28,12 +21,9 @@ class vector {
   double operator*(const vector& other) const;
   vector operator^(const vector& other) const;
 
-  vector operator+=(const vector& other) const;
-  vector operator-=(const vector& other) const;
-  vector operator^=(const vector& other) const;
-
-  // vector operator+(double scalar) const;
-  // vector operator-(double scalar) const;
+  vector& operator+=(const vector& other) const;
+  vector& operator-=(const vector& other) const;
+  vector& operator^=(const vector& other) const;
 
   vector operator*(double scalar) const;
   vector operator/(double scalar) const;
@@ -43,7 +33,8 @@ class vector {
 
   inline size_t size() const { return _size; }
 
-  // double norm() const;
+  double norm() const;
+  vector normalize() const;
 
   // vector round(int places = 0) const;
 
@@ -51,5 +42,7 @@ class vector {
 };
 
 std::ostream& operator<<(std::ostream& os, const vector& v);
+
+vector operator*(double scalar, const vector& v);
 
 }  // namespace numc

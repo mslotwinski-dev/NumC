@@ -1,0 +1,12 @@
+
+include(FetchContent)
+
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/<commit_hash>.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+add_executable(complex complex.cpp)
+target_link_libraries(complex PRIVATE gtest_main)
+target_link_libraries(complex PRIVATE numc)

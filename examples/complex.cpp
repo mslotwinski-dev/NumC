@@ -4,6 +4,8 @@
 using namespace numc;
 
 int main() {
+  auto i = complex<>::i();  // == complex<double>::i().
+
   complex z1 = 3 + 4 * i;
   complex z2 = 1 + 2 * i;
 

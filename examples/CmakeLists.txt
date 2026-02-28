@@ -1,4 +1,12 @@
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_executable(example_complex complex.cpp)
 add_executable(example_vectors vectors.cpp)
+add_executable(example_functions functions.cpp)
+add_executable(example_tensors tensors.cpp)
+
 target_link_libraries(example_complex PRIVATE numc)
+target_link_libraries(example_functions PRIVATE numc)
+target_link_libraries(example_tensors PRIVATE numc)
 target_link_libraries(example_vectors PRIVATE numc)

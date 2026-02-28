@@ -11,8 +11,8 @@
                 "C:\\msys64\\mingw64\\include\\**",
                 "C:\\msys64\\mingw64\\include\\c++\\**"
             ],
-            "cStandard": "c17",
-            "cppStandard": "c++17"
+            "cStandard": "c23",
+            "cppStandard": "c++20"
             
         }
     ],

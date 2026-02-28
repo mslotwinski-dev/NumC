@@ -15,8 +15,8 @@ std::string Log::Color(Colors i) {
   }
 }
 
-void Log::Info(std::string message) { std::cout << Color(CYAN) << "[Info] " << message << Color(NONE) << std::endl; }
+void Log::Info(std::string message) { std::cout << Color(CYAN) << "[INFO] " << message << Color(NONE) << std::endl; }
 
-void Log::Warn(std::string message) { std::cout << Color(YELLOW) << "[Warning] " << message << Color(NONE) << std::endl; }
+void Log::Warn(std::string message) { std::cout << Color(YELLOW) << "[WARNING] " << message << Color(NONE) << std::endl; }
 
-void Log::Error(std::string message) { std::cout << Color(RED) << "[Error] " << message << Color(NONE) << std::endl; }
+void Log::Error(std::string message) { std::cout << Color(RED) << "[ERROR] " << message << Color(NONE) << std::endl; }

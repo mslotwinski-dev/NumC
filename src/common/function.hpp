@@ -91,20 +91,4 @@ inline func<T> pow(T lhs, const func<T>& rhs) {
   return lhs ^ rhs;
 }
 
-// Przydatne funkcje trygonometryczne!
-// template <typename T>
-// inline func<T> sin(const func<T>& f) {
-//   return func<T>([f](T val) { return std::sin(f(val)); });
-// }
-
-// template <typename T>
-// inline func<T> cos(const func<T>& f) {
-//   return func<T>([f](T val) { return std::cos(f(val)); });
-// }
-
-// template <typename T>
-// inline func<T> exp(const func<T>& f) {
-//   return func<T>([f](T val) { return std::exp(f(val)); });
-// }
-
 }  // namespace numc

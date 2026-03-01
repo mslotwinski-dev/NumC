@@ -20,3 +20,5 @@
 // Statistics
 
 #include "statistics/distributions/dist.hpp"
+#include "statistics/visualization/plot.hpp"
+#include "statistics/visualization/plt.hpp"

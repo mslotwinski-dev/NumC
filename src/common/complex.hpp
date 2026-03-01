@@ -6,6 +6,14 @@
 
 namespace numc {
 
+/// @defgroup common Common
+/// @brief Common utilities, data structures, and foundational tools used across the library (vectors, tensors, complex numbers, constants).
+
+/// @defgroup structures Structures & Data Types
+/// @ingroup common
+/// @brief Podstawowe struktury danych i narzędzia (wektory, tensory, liczby zespolone, stałe).
+/// @{
+
 /// @brief Class representing complex numbers with a template parameter for the underlying floating-point type.
 /// @tparam T The underlying floating-point type (e.g., float, double, long double).
 template <typename T = double>
@@ -162,10 +170,12 @@ template <typename T>
 inline T Re(const complex<T>& c) {
   return c.real();
 }
+
 template <typename T>
 inline T Im(const complex<T>& c) {
   return c.imag();
 }
+
 template <typename T>
 inline complex<T> pow(const complex<T>& base, const complex<T>& exp) {
   return base.pow(exp);
@@ -338,5 +348,7 @@ std::ostream& operator<<(std::ostream& os, const complex<T>& c) {
 
   return os;
 }
+
+/// @} // Koniec grupy common
 
 }  // namespace numc

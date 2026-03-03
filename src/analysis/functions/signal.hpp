@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 #include "../../common/constants.hpp"
 #include "../../common/function.hpp"
 #include "../../inc.hpp"

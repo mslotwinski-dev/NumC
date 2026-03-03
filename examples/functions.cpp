@@ -6,14 +6,13 @@ using namespace numc;
 int main() {
   auto x = func<>::x();  // Defualt funkcja f(x) = x na typie double
 
-  func f = x ^ 2;               // Definiowanie funkcji f(x) = x^x
+  func f = (x ^ 2) - 5 * x;     // Definiowanie funkcji f(x) = x^x
   func g = 2 * sin(x / 2) + x;  // Definiowanie funkcji g(x) = sin(x)
 
-  plt::show({f, g}, -10.0, 10.0, "Funkcje", "t [s]", "A [cm]");
+  plt::show({f, g}, -10.0, 10.0);
 
   // func g = [](double x) { return std::sin(x); };
   // Postaram się, żeby definiowanie ręczne było rzadko potrzebne.
-
   func h = [](double x) {
     if (x <= 0) return 2137.0;
     if (x > 0) return 420.0 * x;

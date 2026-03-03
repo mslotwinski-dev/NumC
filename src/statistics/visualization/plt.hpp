@@ -1,8 +1,5 @@
 #pragma once
 
-#include <initializer_list>
-#include <string>
-
 #include "../../common/function.hpp"
 #include "../../common/vector.hpp"
 #include "../../utility/log.hpp"
@@ -14,16 +11,16 @@ namespace numc {
 
 namespace plt {
 
-/// @brief Szybko rysuje pojedynczą funkcję.
-/// @tparam T Typ zmiennoprzecinkowy (dedukowany z funkcji).
-/// @tparam B1 Typ początku przedziału (pozwala na podanie int zamiast double).
-/// @tparam B2 Typ końca przedziału (pozwala na podanie int zamiast double).
-/// @param f Funkcja numc::func do narysowania.
-/// @param x_min Początek przedziału.
-/// @param x_max Koniec przedziału.
-/// @param title Tytuł wykresu.
-/// @param xlabel Podpis osi X.
-/// @param ylabel Podpis osi Y.
+/// @brief Quickly plots a single function.
+/// @tparam T Floating-point type (deduced).
+/// @tparam B1 Type of the lower bound (allows passing int instead of double).
+/// @tparam B2 Type of the upper bound (allows passing int instead of double).
+/// @param f The numc::func to draw.
+/// @param x_min Start of the domain interval.
+/// @param x_max End of the domain interval.
+/// @param title Title of the plot.
+/// @param xlabel X-axis label.
+/// @param ylabel Y-axis label.
 template <typename T, typename B1, typename B2>
 inline void show(const numc::func<T>& f,
                  B1 x_min,
@@ -37,16 +34,16 @@ inline void show(const numc::func<T>& f,
   p.show();
 }
 
-/// @brief Rysuje wiele funkcji na jednym wykresie (np. {f, g}).
-/// @tparam T Typ zmiennoprzecinkowy (dedukowany z funkcji).
-/// @tparam B1 Typ początku przedziału (pozwala na podanie int zamiast double).
-/// @tparam B2 Typ końca przedziału (pozwala na podanie int zamiast double).
-/// @param funcs Lista funkcji numc::func do narysowania.
-/// @param x_min Początek przedziału.
-/// @param x_max Koniec przedziału.
-/// @param title Tytuł wykresu.
-/// @param xlabel Podpis osi X.
-/// @param ylabel Podpis osi Y.
+/// @brief Quickly plots multiple functions on the same graph (e.g., {f, g}).
+/// @tparam T Floating-point type (deduced).
+/// @tparam B1 Type of the lower bound (allows passing int instead of double).
+/// @tparam B2 Type of the upper bound (allows passing int instead of double).
+/// @param funcs List of numc::func objects to draw.
+/// @param x_min Start of the domain interval.
+/// @param x_max End of the domain interval.
+/// @param title Title of the plot.
+/// @param xlabel X-axis label.
+/// @param ylabel Y-axis label.
 template <typename T, typename B1, typename B2>
 inline void show(std::initializer_list<numc::func<T>> funcs,
                  B1 x_min,
@@ -62,13 +59,13 @@ inline void show(std::initializer_list<numc::func<T>> funcs,
   p.show();
 }
 
-/// @brief Szybko rysuje wykres punktowy (scatter) z dwóch wektorów.
-/// @tparam T Typ zmiennoprzecinkowy.
-/// @param x Wektor wartości X.
-/// @param y Wektor wartości Y.
-/// @param title Tytuł wykresu.
-/// @param xlabel Podpis osi X.
-/// @param ylabel Podpis osi Y.
+/// @brief Quickly creates a scatter plot from two data vectors.
+/// @tparam T Floating-point type.
+/// @param x Vector of X coordinates.
+/// @param y Vector of Y coordinates.
+/// @param title Title of the plot.
+/// @param xlabel X-axis label.
+/// @param ylabel Y-axis label.
 template <typename T = double>
 inline void scatter(const numc::vector<T>& x,
                     const numc::vector<T>& y,
@@ -83,6 +80,6 @@ inline void scatter(const numc::vector<T>& x,
 
 }  // namespace plt
 
-/// @}
+/// @} // End of visualization group
 
 }  // namespace numc

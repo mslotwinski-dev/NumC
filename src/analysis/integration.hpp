@@ -2,7 +2,6 @@
 
 #include "../common/vector.hpp"
 #include "../common/function.hpp"
-#include "multivariable/mfunc.hpp"
 #include "../inc.hpp"
 #include "../utility/log.hpp"
 
@@ -284,13 +283,13 @@ T func<T>::integral(T a, T b, T tol) const {
 }
 
 template <typename T>
-T analysis::mfunc<T>::integral_2d(T ax, T bx, T ay, T by, T tol) const {
+T func<T>::integral_2d(T ax, T bx, T ay, T by, T tol) const {
   auto wrapper = [this](T x, T y) { return (*this)(x, y); };
   return analysis::adaptive_simpson_2d<T>(wrapper, ax, bx, ay, by, tol);
 }
 
 template <typename T>
-std::pair<T, T> analysis::mfunc<T>::integral_mc(const vector<T>& a, const vector<T>& b, size_t n_samples) const {
+std::pair<T, T> func<T>::integral_mc(const vector<T>& a, const vector<T>& b, size_t n_samples) const {
   if (a.size() != b.size() || a.size() == 0) {
     throw std::invalid_argument("integral_mc: bounds must have same non-zero size");
   }

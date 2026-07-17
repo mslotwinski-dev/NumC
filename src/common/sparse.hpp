@@ -25,6 +25,10 @@ class sparse_matrix {
   sparse_matrix(size_t rows, size_t cols)
       : _rows(rows), _cols(cols), _row_ptr(rows + 1, 0) {}
 
+  /// @brief Constructs a sparse matrix from an initializer list of triplets.
+  sparse_matrix(size_t rows, size_t cols, std::initializer_list<std::tuple<size_t, size_t, T>> triplets)
+      : sparse_matrix(from_triplets(rows, cols, std::vector<std::tuple<size_t, size_t, T>>(triplets))) {}
+
   /// @brief Returns the number of rows.
   size_t rows() const { return _rows; }
 

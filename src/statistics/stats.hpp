@@ -272,8 +272,8 @@ T t_test_ind(const vector<T>& x, const vector<T>& y) {
   if (nx <= 1 || ny <= 1) return T(0.0);
   
   T mx = mean(x), my = mean(y);
-  T vx = var(x) * T(nx - 1);
-  T vy = var(y) * T(ny - 1);
+  T vx = variance(x) * T(nx - 1);
+  T vy = variance(y) * T(ny - 1);
   
   T pooled_var = (vx + vy) / T(nx + ny - 2);
   T standard_error = std::sqrt(pooled_var * (T(1.0)/T(nx) + T(1.0)/T(ny)));
@@ -330,6 +330,37 @@ T prod(const vector<T>& x) {
   T p = T(1.0);
   for (size_t i = 0; i < x.size(); ++i) p *= x[i];
   return p;
+}
+
+/// @brief Performs a Kolmogorov-Smirnov test for two samples.
+/// @return KS-statistic (D).
+template <typename T = double>
+T ks_test(const vector<T>& sample1, const vector<T>& sample2) {
+  std::vector<T> s1_sorted(sample1.begin(), sample1.end());
+  std::vector<T> s2_sorted(sample2.begin(), sample2.end());
+  
+  std::sort(s1_sorted.begin(), s1_sorted.end());
+  std::sort(s2_sorted.begin(), s2_sorted.end());
+
+  std::vector<T> all_vals;
+  all_vals.insert(all_vals.end(), s1_sorted.begin(), s1_sorted.end());
+  all_vals.insert(all_vals.end(), s2_sorted.begin(), s2_sorted.end());
+  std::sort(all_vals.begin(), all_vals.end());
+  
+  auto get_cdf = [](const std::vector<T>& sorted_sample, T x) -> T {
+    auto it = std::upper_bound(sorted_sample.begin(), sorted_sample.end(), x);
+    return static_cast<T>(std::distance(sorted_sample.begin(), it)) / static_cast<T>(sorted_sample.size());
+  };
+
+  T max_d = T(0.0);
+  for (T val : all_vals) {
+    T cdf1 = get_cdf(s1_sorted, val);
+    T cdf2 = get_cdf(s2_sorted, val);
+    T d = std::abs(cdf1 - cdf2);
+    if (d > max_d) max_d = d;
+  }
+  
+  return max_d;
 }
 
 /// @}

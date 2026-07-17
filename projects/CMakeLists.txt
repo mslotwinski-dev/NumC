@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.16)
+
+add_executable(project_common project_common.cpp)
+target_link_libraries(project_common PRIVATE numc)
+
+add_executable(project_analysis project_analysis.cpp)
+target_link_libraries(project_analysis PRIVATE numc)
+
+add_executable(project_diff_eq project_diff_eq.cpp)
+target_link_libraries(project_diff_eq PRIVATE numc)
+
+add_executable(project_geometry project_geometry.cpp)
+target_link_libraries(project_geometry PRIVATE numc)
+
+add_executable(project_graphs project_graphs.cpp)
+target_link_libraries(project_graphs PRIVATE numc)
+
+add_executable(project_linear_algebra project_linear_algebra.cpp)
+target_link_libraries(project_linear_algebra PRIVATE numc)
+
+add_executable(project_number_theory project_number_theory.cpp)
+target_link_libraries(project_number_theory PRIVATE numc)
+
+add_executable(project_optimalization project_optimalization.cpp)
+target_link_libraries(project_optimalization PRIVATE numc)
+
+add_executable(project_statistics project_statistics.cpp)
+target_link_libraries(project_statistics PRIVATE numc)

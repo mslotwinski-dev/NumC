@@ -4,7 +4,7 @@
 using namespace numc;
 
 int main() {
-  auto x = func<>::x();  // Defualt funkcja f(x) = x na typie double
+  auto x = numc::x;  // Global coordinate variable x
 
   func f = (x ^ 2) - 5 * x;     // Definiowanie funkcji f(x) = x^x
   func g = 2 * sin(x / 2) + x;  // Definiowanie funkcji g(x) = sin(x)

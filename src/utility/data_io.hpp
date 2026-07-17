@@ -6,6 +6,8 @@
 #include <sstream>
 #include <stdexcept>
 #include "log.hpp"
+#include <array>
+#include "../common/vector.hpp"
 
 namespace numc {
 namespace utility {
@@ -38,6 +40,23 @@ std::vector<std::vector<T>> read_data_file(const std::string& filename) {
   }
 
   return data;
+}
+
+template <size_t N, typename T = double>
+std::array<numc::vector<T>, N> unpack_columns(const std::vector<std::vector<T>>& data) {
+  std::array<numc::vector<T>, N> cols;
+  for (size_t i = 0; i < N; ++i) cols[i].reserve(data.size());
+  
+  for (size_t i = 0; i < data.size(); ++i) {
+    for (size_t j = 0; j < N; ++j) {
+      if (j < data[i].size()) {
+        cols[j].push_back(data[i][j]);
+      } else {
+        cols[j].push_back(T(0));
+      }
+    }
+  }
+  return cols;
 }
 
 }  // namespace utility

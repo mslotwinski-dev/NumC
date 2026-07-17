@@ -243,6 +243,49 @@ std::ostream& operator<<(std::ostream& os, const vector<T>& v) {
   return os;
 }
 
+/// @brief Element-wise relational operators returning a boolean mask (std::vector<bool>).
+template <typename T>
+std::vector<bool> operator>(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] > val;
+  return mask;
+}
+
+template <typename T>
+std::vector<bool> operator<(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] < val;
+  return mask;
+}
+
+template <typename T>
+std::vector<bool> operator>=(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] >= val;
+  return mask;
+}
+
+template <typename T>
+std::vector<bool> operator<=(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] <= val;
+  return mask;
+}
+
+template <typename T>
+std::vector<bool> operator==(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] == val;
+  return mask;
+}
+
+template <typename T>
+std::vector<bool> operator!=(const vector<T>& v, T val) {
+  std::vector<bool> mask(v.size());
+  for (size_t i = 0; i < v.size(); ++i) mask[i] = v[i] != val;
+  return mask;
+}
+
 /// @brief Generates a vector of linearly spaced values.
 template <typename T = double>
 vector<T> linspace(T start, T stop, size_t num) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mfunc.hpp"
+#include "../../common/function.hpp"
 #include "../../common/vector.hpp"
 #include "../../common/autodiff.hpp"
 #include <cmath>
@@ -14,10 +14,10 @@ namespace analysis {
 
 /// @brief Finds the local minimum of a multivariable function using Gradient Descent.
 template <typename T = double>
-vector<T> find_minimum(const mfunc<T>& f, const vector<T>& start_pt, T learning_rate = T(0.01), T tol = T(1e-6), int max_iter = 10000) {
+vector<T> find_minimum(const func<T>& f, const vector<T>& start_pt, T learning_rate = T(0.01), T tol = T(1e-6), int max_iter = 10000) {
   vector<T> x = start_pt;
   for (int iter = 0; iter < max_iter; ++iter) {
-    // Wrap mfunc to std::function
+    // Wrap func to std::function
     std::function<T(const vector<T>&)> func_wrapper = [&f](const vector<T>& pt) { return f(pt); };
     vector<T> grad = numc::gradient(func_wrapper, x);
     T grad_norm = T(0.0);

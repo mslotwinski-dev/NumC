@@ -163,31 +163,31 @@ T auto_diff(F f, T x) {
 }
 
 /// @brief Computes the numerical gradient of a vector function F: R^n -> R.
-template <typename T = double>
-vector<T> gradient(std::function<T(const vector<T>&)> F, const vector<T>& x, T h = T(1e-7)) {
+template <typename F, typename T = double>
+vector<T> gradient(F F_func, const vector<T>& x, T h = T(1e-7)) {
   size_t n = x.size();
   vector<T> grad(n);
   for (size_t i = 0; i < n; ++i) {
     vector<T> x_plus = x, x_minus = x;
     x_plus[i] += h;
     x_minus[i] -= h;
-    grad[i] = (F(x_plus) - F(x_minus)) / (T(2.0) * h);
+    grad[i] = (F_func(x_plus) - F_func(x_minus)) / (T(2.0) * h);
   }
   return grad;
 }
 
 /// @brief Computes the numerical Jacobian matrix of F: R^n -> R^m.
-template <typename T = double>
-tensor<T> jacobian(std::function<vector<T>(const vector<T>&)> F, const vector<T>& x, T h = T(1e-7)) {
+template <typename F, typename T = double>
+tensor<T> jacobian(F F_func, const vector<T>& x, T h = T(1e-7)) {
   size_t n = x.size();
-  vector<T> F0 = F(x);
+  vector<T> F0 = F_func(x);
   size_t m = F0.size();
   tensor<T> J({m, n});
   for (size_t j = 0; j < n; ++j) {
     vector<T> x_plus = x, x_minus = x;
     x_plus[j] += h;
     x_minus[j] -= h;
-    vector<T> Fp = F(x_plus), Fm = F(x_minus);
+    vector<T> Fp = F_func(x_plus), Fm = F_func(x_minus);
     for (size_t i = 0; i < m; ++i) {
       J(i, j) = (Fp[i] - Fm[i]) / (T(2.0) * h);
     }
@@ -196,11 +196,11 @@ tensor<T> jacobian(std::function<vector<T>(const vector<T>&)> F, const vector<T>
 }
 
 /// @brief Computes the numerical Hessian matrix of F: R^n -> R.
-template <typename T = double>
-tensor<T> hessian(std::function<T(const vector<T>&)> F, const vector<T>& x, T h = T(1e-5)) {
+template <typename F, typename T = double>
+tensor<T> hessian(F F_func, const vector<T>& x, T h = T(1e-5)) {
   size_t n = x.size();
   tensor<T> H({n, n});
-  T f0 = F(x);
+  T f0 = F_func(x);
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = i; j < n; ++j) {
       vector<T> xpp = x, xpm = x, xmp = x, xmm = x;
@@ -208,7 +208,7 @@ tensor<T> hessian(std::function<T(const vector<T>&)> F, const vector<T>& x, T h 
       xpm[i] += h; xpm[j] -= h;
       xmp[i] -= h; xmp[j] += h;
       xmm[i] -= h; xmm[j] -= h;
-      H(i, j) = (F(xpp) - F(xpm) - F(xmp) + F(xmm)) / (T(4.0) * h * h);
+      H(i, j) = (F_func(xpp) - F_func(xpm) - F_func(xmp) + F_func(xmm)) / (T(4.0) * h * h);
       H(j, i) = H(i, j);
     }
   }

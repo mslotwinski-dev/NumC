@@ -25,6 +25,7 @@
 #include "common/sparse.hpp"
 #include "common/tensor.hpp"
 #include "common/vector.hpp"
+#include "common/dataframe.hpp"
 
 // Linear Algebra
 
@@ -47,7 +48,7 @@
 
 // Multivariable
 
-#include "analysis/multivariable/mfunc.hpp"
+#include "analysis/multivariable/nabla.hpp"
 #include "analysis/multivariable/optimization.hpp"
 
 // Optimalization

@@ -8,10 +8,9 @@ namespace numc {
 
 /// @brief The independent variable x — shorthand for func<>::x().
 /// @code
-/// auto x = numc::x();
+/// auto x = numc::x;
 /// func f = sin(x) * exp(-0.1 * x);
 /// @endcode
-inline func<> x() { return func<>::x(); }
 
 // --- Root finding (no extra using-namespace needed) ---
 using optimalization::bisection;

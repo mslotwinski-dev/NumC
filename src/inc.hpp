@@ -14,4 +14,7 @@
 #include <stdexcept>
 #include <string>
 #include <type_traits>
+#include <tuple>
+#include <random>
+#include <array>
 #include <vector>

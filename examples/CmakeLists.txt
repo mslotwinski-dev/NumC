@@ -6,11 +6,51 @@ add_executable(example_vectors vectors.cpp)
 add_executable(example_functions functions.cpp)
 add_executable(example_tensors tensors.cpp)
 add_executable(example_plots plots.cpp)
+add_executable(example_showcase showcase.cpp)
 add_executable(example_roots roots.cpp)
+add_executable(example_numerical_methods numerical_methods.cpp)
+
+add_executable(root_lab1 root_lab1.cpp)
+target_link_libraries(root_lab1 PRIVATE numc)
+
+add_executable(root_lab2 root_lab2.cpp)
+target_link_libraries(root_lab2 PRIVATE numc)
+
+add_executable(root_lab3 root_lab3.cpp)
+target_link_libraries(root_lab3 PRIVATE numc)
+
+add_executable(root_lab4 root_lab4.cpp)
+target_link_libraries(root_lab4 PRIVATE numc)
+
+add_executable(root_lab5 root_lab5.cpp)
+target_link_libraries(root_lab5 PRIVATE numc)
+
+add_executable(root_lab6 root_lab6.cpp)
+target_link_libraries(root_lab6 PRIVATE numc)
+
+add_executable(root_lab7 root_lab7.cpp)
+target_link_libraries(root_lab7 PRIVATE numc)
+
+add_executable(root_lab8 root_lab8.cpp)
+target_link_libraries(root_lab8 PRIVATE numc)
+
+add_executable(root_lab9 root_lab9.cpp)
+target_link_libraries(root_lab9 PRIVATE numc)
+
+add_executable(root_lab10 root_lab10.cpp)
+target_link_libraries(root_lab10 PRIVATE numc)
+
+add_executable(root_lab11 root_lab11.cpp)
+target_link_libraries(root_lab11 PRIVATE numc)
+
+add_executable(root_lab12 root_lab12.cpp)
+target_link_libraries(root_lab12 PRIVATE numc)
 
 target_link_libraries(example_complex PRIVATE numc)
 target_link_libraries(example_functions PRIVATE numc)
 target_link_libraries(example_vectors PRIVATE numc)
 target_link_libraries(example_plots PRIVATE numc)
+target_link_libraries(example_showcase PRIVATE numc)
 target_link_libraries(example_tensors PRIVATE numc)
 target_link_libraries(example_roots PRIVATE numc)
+target_link_libraries(example_numerical_methods PRIVATE numc)

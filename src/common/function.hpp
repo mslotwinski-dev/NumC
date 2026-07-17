@@ -37,6 +37,17 @@ class func {
   /// @return The result of the function evaluation.
   [[nodiscard]] T operator()(T x) const { return f(x); }
 
+  /// @brief Evaluates the mathematical function on a vector of values element-wise.
+  /// @param x_vec The vector of independent variables.
+  /// @return A new vector with evaluated results.
+  [[nodiscard]] vector<T> operator()(const vector<T>& x_vec) const {
+    vector<T> res(x_vec.size());
+    for (size_t i = 0; i < x_vec.size(); ++i) {
+      res[i] = f(x_vec[i]);
+    }
+    return res;
+  }
+
   /// @brief Unary negation operator. Creates a new function that returns the negated result of this function.
   /// @return A new function object representing -f(x).
   func operator-() const {
@@ -118,6 +129,13 @@ class func {
   friend func operator^(T lhs, const func& rhs) {
     return func([lhs, rhs](T val) { return std::pow(lhs, rhs(val)); });
   }
+
+  /// @brief Calculates the definite integral of the function using Adaptive Simpson's quadrature.
+  /// @param a Lower bound
+  /// @param b Upper bound
+  /// @param tol Tolerance (default: 1e-6)
+  /// @return Definite integral of the function
+  T integral(T a, T b, T tol = T(1e-6)) const;
 };
 
 /// @brief Computes the power of a function raised to another function. Alias for the ^ operator.

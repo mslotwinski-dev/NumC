@@ -32,8 +32,35 @@ class vector {
   /// @param values The initializer list of values.
   vector(std::initializer_list<T> values) : data(values) {}
 
+  /// @brief Constructs a numc::vector from an std::vector.
+  vector(const std::vector<T>& values) : data(values) {}
+
+  /// @brief Implicit conversion to std::vector<T>.
+  operator std::vector<T>() const { return data; }
+
   /// @brief Default destructor.
   ~vector() = default;
+
+  /// @brief Iterator support for range-based for loops.
+  auto begin() { return data.begin(); }
+  auto end() { return data.end(); }
+  auto begin() const { return data.begin(); }
+  auto end() const { return data.end(); }
+
+  /// @brief Adds an element to the end.
+  void push_back(T val) { data.push_back(val); }
+
+  /// @brief Reserves memory.
+  void reserve(size_t new_cap) { data.reserve(new_cap); }
+
+  /// @brief Resizes the vector.
+  void resize(size_t new_size, T val = T(0.0)) { data.resize(new_size, val); }
+
+  /// @brief Clears the vector.
+  void clear() { data.clear(); }
+
+  /// @brief Checks if vector is empty.
+  bool empty() const { return data.empty(); }
 
   /// @brief Gets the number of elements (dimensionality) of the vector.
   /// @return The size of the vector.
@@ -214,6 +241,19 @@ std::ostream& operator<<(std::ostream& os, const vector<T>& v) {
   }
   os << ")";
   return os;
+}
+
+/// @brief Generates a vector of linearly spaced values.
+template <typename T = double>
+vector<T> linspace(T start, T stop, size_t num) {
+  if (num == 0) return vector<T>();
+  if (num == 1) return vector<T>{start};
+  vector<T> res(num);
+  T step = (stop - start) / static_cast<T>(num - 1);
+  for (size_t i = 0; i < num; ++i) {
+    res[i] = start + static_cast<T>(i) * step;
+  }
+  return res;
 }
 
 /// @} // Koniec grupy common

@@ -59,6 +59,26 @@ inline void show(std::initializer_list<numc::func<T>> funcs,
   p.show();
 }
 
+/// @brief Quickly plots functions together with scatter data — one-liner dashboard.
+template <typename T, typename B1, typename B2>
+inline void show(std::initializer_list<numc::func<T>> funcs,
+                 B1 x_min,
+                 B2 x_max,
+                 const std::string& title,
+                 const std::string& xlabel,
+                 const std::string& ylabel,
+                 const numc::vector<T>& data_x,
+                 const numc::vector<T>& data_y,
+                 const std::string& scatter_name = "Pomiary") {
+  numc::plot<T> p(title);
+  p.set_xlabel(xlabel).set_ylabel(ylabel);
+  for (const auto& f : funcs) {
+    p.add(f, static_cast<T>(x_min), static_cast<T>(x_max));
+  }
+  p.add_scatter(data_x, data_y, scatter_name);
+  p.show();
+}
+
 /// @brief Quickly creates a scatter plot from two data vectors.
 /// @tparam T Floating-point type.
 /// @param x Vector of X coordinates.

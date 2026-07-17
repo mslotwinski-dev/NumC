@@ -3,7 +3,7 @@
 using namespace numc;
 
 int main() {
-  auto x = func<>::x();
+  auto x = numc::x();
 
   func f1 = sin(x) * (x / 2.0);
   func f2 = exp(-0.1 * x) * cos(x) * 5.0;
@@ -12,11 +12,11 @@ int main() {
   vector data_y = {3.5, -2.1, -1.0, 5.2, -4.8, 5.1, -4.0};
 
   plot dashboard("Analiza drgań");
-  
+
   dashboard.set_xlabel("Czas [ms]").set_ylabel("Amplituda [V]");
   dashboard.add(f1, -10.0, 10.0, "Model teoretyczny");
   dashboard.add(f2, -10.0, 10.0, "Model z tłumieniem");
-  dashboard.add_scatter(data_x, data_y, "Pomiary z czujnika");
+  dashboard.add(data_x, data_y, "Pomiary z czujnika");
   dashboard.show();
 
   // FAST PLOT: Szybkie rysowanie wykresu bez tworzenia obiektu plot.

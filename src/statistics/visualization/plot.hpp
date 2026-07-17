@@ -12,6 +12,7 @@
 #include "../../common/function.hpp"
 #include "../../common/vector.hpp"
 #include "../../utility/log.hpp"
+#include "../histogram.hpp"
 
 namespace numc {
 
@@ -32,7 +33,14 @@ class plot {
     std::vector<T> y;
     std::string name;
     std::string mode;  // "lines" or "markers"
+    std::string color;
   };
+
+  static constexpr const char* TRACE_COLORS[] = {
+      "#636EFA", "#EF553B", "#00CC96", "#AB63FA",
+      "#FFA15A", "#19D3F3", "#FF6692", "#B6E880",
+  };
+  static constexpr size_t TRACE_COLOR_COUNT = 8;
 
   std::vector<Trace> _traces;
   std::string _title;
@@ -53,6 +61,12 @@ class plot {
   /// @brief Default constructor.
   /// @param title Title of the plot.
   plot(std::string title = "numc Plot") : _title(std::move(title)), _x_label("x"), _y_label("y") {}
+
+  /// @brief Sets the plot title.
+  plot& set_title(const std::string& title) {
+    _title = title;
+    return *this;
+  }
 
   /// @brief Sets the label for the X axis.
   plot& set_xlabel(const std::string& label) {
@@ -84,6 +98,7 @@ class plot {
     // Jeśli nie podano nazwy, generujemy y1, y2, y3 na podstawie liczby już dodanych wykresów.
     tr.name = name.empty() ? ("y" + std::to_string(_traces.size() + 1)) : name;
     tr.mode = "lines";
+    tr.color = TRACE_COLORS[_traces.size() % TRACE_COLOR_COUNT];
 
     T step = (x_max - x_min) / T(points - 1);
     for (size_t i = 0; i < points; ++i) {
@@ -108,9 +123,37 @@ class plot {
     Trace tr;
     tr.name = name;
     tr.mode = "markers";
+    tr.color = TRACE_COLORS[_traces.size() % TRACE_COLOR_COUNT];
     for (size_t i = 0; i < x.size(); ++i) {
       tr.x.push_back(x[i]);
       tr.y.push_back(y[i]);
+    }
+    _traces.push_back(std::move(tr));
+    return *this;
+  }
+
+  /// @brief Alias for add_scatter — same beautiful chain, shorter name.
+  plot& add(const numc::vector<T>& x, const numc::vector<T>& y, const std::string& name = "Data") {
+    return add_scatter(x, y, name);
+  }
+
+  /// @brief Dodaje histogram 1D do wykresu.
+  /// @param hist Histogram do narysowania.
+  /// @param name Nazwa w legendzie.
+  plot& add(const statistics::Histogram1D<T>& hist, const std::string& name = "Histogram") {
+    vector<T> centers = hist.get_bin_centers();
+    vector<T> contents = hist.get_bin_contents();
+    // Plotly supports "bar" traces, but our Trace struct currently assumes "lines" or "markers".
+    // We can use lines to draw the outline, or just add_scatter for now, but drawing it as lines looks better for PDFs.
+    Trace tr;
+    tr.name = name;
+    tr.mode = "lines";
+    tr.color = TRACE_COLORS[_traces.size() % TRACE_COLOR_COUNT];
+    // For a step-like histogram look:
+    T hw = (centers[1] - centers[0]) / T(2.0);
+    for (size_t i = 0; i < centers.size(); ++i) {
+      tr.x.push_back(centers[i] - hw); tr.y.push_back(contents[i]);
+      tr.x.push_back(centers[i] + hw); tr.y.push_back(contents[i]);
     }
     _traces.push_back(std::move(tr));
     return *this;
@@ -186,6 +229,10 @@ class plot {
 
       file << "      mode: '" << tr.mode << "',\n";
       file << "      name: '" << tr.name << "',\n";
+      if (!tr.color.empty()) {
+        file << "      line: { color: '" << tr.color << "' },\n";
+        file << "      marker: { color: '" << tr.color << "', size: 8 },\n";
+      }
       file << "      hovertemplate: '(%{x:.3~f}, %{y:.3~f})<extra></extra>'\n";
       file << "    };\n";
     }

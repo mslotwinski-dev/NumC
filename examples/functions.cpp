@@ -11,8 +11,9 @@ int main() {
 
   plt::show({f, g}, -10.0, 10.0);
 
+  // Definiowanie ręczne nie jest rzadko potrzebne.
   // func g = [](double x) { return std::sin(x); };
-  // Postaram się, żeby definiowanie ręczne było rzadko potrzebne.
+
   func h = [](double x) {
     if (x <= 0) return 2137.0;
     if (x > 0) return 420.0 * x;

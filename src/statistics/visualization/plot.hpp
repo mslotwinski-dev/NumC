@@ -122,14 +122,24 @@ class plot {
   void show(std::string filename = "") const {
     std::filesystem::path filepath;
 
+    std::time_t now = std::time(nullptr);
+    std::string current_time = std::to_string(now);
+
     // --- HANDLE TEMP FILE GENERATION ---
     if (filename.empty()) {
       static int plot_counter = 0;
       plot_counter++;
 
-      // Get system temp directory (e.g., C:\Users\Name\AppData\Local\Temp on Windows)
-      std::filesystem::path temp_dir = std::filesystem::temp_directory_path();
-      std::string temp_filename = "numc_plot_" + std::to_string(plot_counter) + ".html";
+      // Zbudowanie poprawnej ścieżki (użycie operatora '/' dodaje odpowiedni separator systemu)
+      std::filesystem::path temp_dir = std::filesystem::temp_directory_path() / "numc";
+
+      // Upewnienie się, że folder 'numc' istnieje w katalogu tymczasowym
+      if (!std::filesystem::exists(temp_dir)) {
+          std::filesystem::create_directories(temp_dir);
+      }
+
+      // Zbudowanie pełnej ścieżki do pliku
+      std::string temp_filename = "numc_plot_" + current_time + ".html";
       filepath = temp_dir / temp_filename;
     } else {
       filepath = filename;

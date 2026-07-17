@@ -35,7 +35,7 @@
     {
       "type": "cppbuild",
       "label": "C/C++: gcc.exe kompiluj aktywny plik",
-      "command": "C:\\msys64\\mingw64\\bin\\gcc.exe",
+      "command": "D:\\msys64\\mingw64\\bin\\gcc.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",

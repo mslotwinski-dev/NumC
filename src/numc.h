@@ -17,8 +17,13 @@
 #include "analysis/functions/signal.hpp"
 #include "analysis/functions/special.hpp"
 
+// Optimalization
+
+#include "optimalization/solvers/roots.hpp"
+
 // Statistics
 
 #include "statistics/distributions/dist.hpp"
 #include "statistics/visualization/plot.hpp"
 #include "statistics/visualization/plt.hpp"
+

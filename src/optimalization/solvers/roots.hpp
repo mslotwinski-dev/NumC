@@ -51,7 +51,7 @@ T bisection(const numc::func<T>& f, T a, T b, T tol = T(1e-6), int max_iter = 10
     }
   }
 
-  Log::Warning("Bisection method reached the maximum number of iterations.");
+  Log::Warn("Bisection method reached the maximum number of iterations.");
   return c;
 }
 
@@ -98,7 +98,7 @@ T regula_falsi(const numc::func<T>& f, T a, T b, T tol = T(1e-6), int max_iter =
     }
   }
 
-  Log::Warning("Regula Falsi method reached the maximum number of iterations.");
+  Log::Warn("Regula Falsi method reached the maximum number of iterations.");
   return c;
 }
 
@@ -123,7 +123,7 @@ T fixed_point(const numc::func<T>& f, T x0, T tol = T(1e-6), int max_iter = 100)
     x = x_next;
   }
 
-  Log::Warning("Fixed-point iteration reached the maximum number of iterations.");
+  Log::Warn("Fixed-point iteration reached the maximum number of iterations.");
   return x;
 }
 
@@ -158,7 +158,7 @@ T newton(const numc::func<T>& f, T x0, T tol = T(1e-6), int max_iter = 100) {
     x = x - (fx / dfx);
   }
 
-  Log::Warning("Newton's method reached the maximum number of iterations.");
+  Log::Warn("Newton's method reached the maximum number of iterations.");
   return x;
 }
 
@@ -202,7 +202,7 @@ T halley(const numc::func<T>& f, T x0, T tol = T(1e-6), int max_iter = 100) {
     x = x_next;
   }
 
-  Log::Warning("Halley's method reached the maximum number of iterations.");
+  Log::Warn("Halley's method reached the maximum number of iterations.");
   return x;
 }
 
@@ -239,7 +239,7 @@ T secant(const numc::func<T>& f, T x0, T x1, T tol = T(1e-6), int max_iter = 100
     f1 = f(x2);
   }
 
-  Log::Warning("Secant method reached the maximum number of iterations.");
+  Log::Warn("Secant method reached the maximum number of iterations.");
   return x1;
 }
 
@@ -286,7 +286,7 @@ T inverse_quadratic(const numc::func<T>& f, T x0, T x1, T x2, T tol = T(1e-6), i
     f2 = f3;
   }
 
-  Log::Warning("Inverse Quadratic Interpolation reached the maximum number of iterations.");
+  Log::Warn("Inverse Quadratic Interpolation reached the maximum number of iterations.");
   return x3;
 }
 

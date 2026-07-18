@@ -13,17 +13,27 @@
 #include "../../common/vector.hpp"
 #include "../../utility/log.hpp"
 #include "../histogram.hpp"
+#include "plot_renderer.hpp"
+#include "plot_window.hpp"
 
 namespace numc {
 
 /// @defgroup visualization Visualization
 /// @ingroup statistics
-/// @brief Tools for plotting mathematical functions and data using Plotly.js. Provides an easy interface to create interactive plots in the browser
-/// with support for multiple functions, custom labels, and automatic handling of edge cases (NaN/Inf). Designed to work seamlessly with numc::func
-/// and numc::vector for quick visualization of mathematical expressions and datasets.
+/// @brief Tools for plotting mathematical functions and data. Provides an easy interface to create
+/// publication-quality SVG plots (default) or interactive HTML plots (via Plotly.js).
+/// Supports multiple functions, custom labels, scatter data, and automatic handling of edge cases (NaN/Inf).
+/// Designed to work seamlessly with numc::func and numc::vector for quick visualization of mathematical expressions and datasets.
 /// @{
 
-/// @brief A class for generating interactive web-based plots (via Plotly.js).
+/// @brief Backend selection for plot rendering.
+enum class PlotBackend {
+  WINDOW, ///< Default. Opens a native GUI window with the plot.
+  SVG,    ///< Generates a beautiful matplotlib-style SVG file.
+  WEB     ///< Generates an interactive HTML file using Plotly.js.
+};
+
+/// @brief A class for generating publication-quality plots.
 /// @tparam T Underlying floating-point type.
 template <typename T = double>
 class plot {
@@ -37,8 +47,8 @@ class plot {
   };
 
   static constexpr const char* TRACE_COLORS[] = {
-      "#636EFA", "#EF553B", "#00CC96", "#AB63FA",
-      "#FFA15A", "#19D3F3", "#FF6692", "#B6E880",
+      "#58a6ff", "#f78166", "#3fb950", "#d2a8ff",
+      "#f0883e", "#79c0ff", "#ff7b72", "#7ee787",
   };
   static constexpr size_t TRACE_COLOR_COUNT = 8;
 
@@ -159,10 +169,139 @@ class plot {
     return *this;
   }
 
-  /// @brief Generates an HTML file with the plot and opens it in the default browser.
-  /// If no filename is provided, a temporary file is created in the system's temp directory.
-  /// @param filename Output filename (optional).
-  void show(std::string filename = "") const {
+  /// @brief Generates a publication-quality plot.
+  /// @param backend The rendering backend (default: WINDOW).
+  /// @param theme The visual theme (default: DARK).
+  /// @param filename Output filename for SVG/WEB backends (optional).
+  void show(PlotBackend backend = PlotBackend::WINDOW, 
+            PlotTheme theme = PlotTheme::DARK,
+            std::string filename = "") const {
+    if (backend == PlotBackend::WEB) {
+      _show_web(filename);
+    } else if (backend == PlotBackend::SVG) {
+      _show_svg(filename, theme);
+    } else {
+      _show_window(theme);
+    }
+  }
+
+  /// @brief Generates a plot using the specified theme (defaults to WINDOW backend).
+  void show(PlotTheme theme, std::string filename = "") const {
+    show(PlotBackend::WINDOW, theme, filename);
+  }
+
+  /// @brief Generates an SVG plot with the specified theme.
+  void show_svg(PlotTheme theme = PlotTheme::DARK, std::string filename = "") const {
+    _show_svg(filename, theme);
+  }
+
+  /// @brief Overload for string backend name and theme
+  void show(const std::string& backend_str, PlotTheme theme = PlotTheme::DARK, std::string filename = "") const {
+    if (backend_str == "web" || backend_str == "WEB" || backend_str == "html" || backend_str == "plotly") {
+      _show_web(filename);
+    } else if (backend_str == "svg" || backend_str == "SVG") {
+      _show_svg(filename, theme);
+    } else {
+      _show_window(theme);
+    }
+  }
+
+
+
+  /// @brief Explicit method to show the interactive web plot (Plotly.js).
+  void show_web(std::string filename = "") const {
+    _show_web(filename);
+  }
+
+ private:
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // Native Window Backend — GDI+ renderer
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  void _show_window(PlotTheme theme) const {
+#if defined(_WIN32)
+    win_detail::PlotWindowData data;
+    data.title = _title;
+    data.xlabel = _x_label;
+    data.ylabel = _y_label;
+    data.theme = theme;
+
+    for (const auto& tr : _traces) {
+      svg_detail::TraceData<T> td;
+      td.x = tr.x;
+      td.y = tr.y;
+      td.name = tr.name;
+      td.mode = tr.mode;
+      td.color = tr.color;
+      data.traces.push_back(std::move(td));
+    }
+
+    win_detail::show_window(data);
+#else
+    // Fallback on non-Windows
+    Log::Warning("Native window rendering is only supported on Windows. Falling back to SVG.");
+    _show_svg("", theme);
+#endif
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // SVG Backend — matplotlib-style publication-quality vector graphics
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  void _show_svg(std::string filename, PlotTheme theme) const {
+    // Build TraceData from internal Trace format
+    std::vector<svg_detail::TraceData<T>> trace_data;
+    for (const auto& tr : _traces) {
+      svg_detail::TraceData<T> td;
+      td.x = tr.x;
+      td.y = tr.y;
+      td.name = tr.name;
+      td.mode = tr.mode;
+      td.color = tr.color;
+      trace_data.push_back(std::move(td));
+    }
+
+    svg_detail::SvgPlotRenderer<T> renderer(_title, _x_label, _y_label, trace_data, theme);
+
+    // Determine output path
+    std::filesystem::path filepath;
+    if (filename.empty()) {
+      static int svg_counter = 0;
+      svg_counter++;
+      std::time_t now = std::time(nullptr);
+      std::filesystem::path temp_dir = std::filesystem::temp_directory_path() / "numc";
+      if (!std::filesystem::exists(temp_dir)) {
+        std::filesystem::create_directories(temp_dir);
+      }
+      std::string temp_filename = "numc_plot_" + std::to_string(now) + "_" + std::to_string(svg_counter) + ".svg";
+      filepath = temp_dir / temp_filename;
+    } else {
+      filepath = filename;
+    }
+
+    // Render and write
+    std::ofstream file(filepath);
+    if (!file.is_open()) {
+      Log::Error("Failed to open file for writing the SVG plot!");
+      return;
+    }
+    file << renderer.render();
+    file.close();
+
+    // Open in system viewer
+    std::string path_str = filepath.string();
+#if defined(_WIN32)
+    std::string cmd = "start \"\" \"" + path_str + "\"";
+#elif defined(__APPLE__)
+    std::string cmd = "open \"" + path_str + "\"";
+#else
+    std::string cmd = "xdg-open \"" + path_str + "\"";
+#endif
+    std::system(cmd.c_str());
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // Web Backend — interactive Plotly.js HTML (original implementation)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  void _show_web(std::string filename) const {
     std::filesystem::path filepath;
 
     std::time_t now = std::time(nullptr);

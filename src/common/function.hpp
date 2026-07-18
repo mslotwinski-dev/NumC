@@ -179,8 +179,11 @@ inline func<T> pow(T lhs, const func<T>& rhs) {
 /// @} // Koniec grupy common
 
 // Global coordinate functions to allow purely declarative mathematical expressions.
-inline const func<double> x = func<double>::x();
-inline const func<double> y = func<double>::y();
-inline const func<double> z = func<double>::z();
+namespace funcv {
+  inline const func<double> x = func<double>::x();
+  inline const func<double> y = func<double>::y();
+  inline const func<double> z = func<double>::z();
+}
+
 
 }  // namespace numc

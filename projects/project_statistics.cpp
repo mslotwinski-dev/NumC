@@ -8,7 +8,7 @@ using namespace numc::statistics;
 int main() {
   std::cout << "=== Projekt Statistics: Monte Carlo Rozpadu Promieniotworczego ===\n" << std::endl;
 
-  auto x = numc::x;
+  auto x = funcv::x;
 
   // 1. Modelowanie czasu rozpadu jądra jako rozkładu wykładniczego
   // Prawdopodobieństwo rozpadu w czasie t: f(t) = lambda * exp(-lambda * t)

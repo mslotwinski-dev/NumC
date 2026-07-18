@@ -8,6 +8,9 @@ using namespace numc::analysis;
 int main() {
   std::cout << "=== Autodiff Example ===" << std::endl;
 
+  auto x = funcv::x;
+  auto y = funcv::y;
+
   // 1D Derivative using Calculus module (since func<double> is evaluated numerically)
   // f(x) = sin(x) * x^2
   auto f_1d = sin(x) * (x ^ 2.0);

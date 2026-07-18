@@ -8,9 +8,9 @@ using namespace numc::analysis;
 int main() {
   std::cout << "=== Projekt Analysis: Elektromagnetyzm ===\n" << std::endl;
 
-  auto x = numc::x;
-  auto y = numc::y;
-  auto z = numc::z;
+  auto x = funcv::x;
+  auto y = funcv::y;
+  auto z = funcv::z;
 
   // 1. Definicja potencjału elektrycznego V(x, y, z)
   // Załóżmy dipol w centrum lub inny ładunek, dla uproszczenia weźmiemy V(x,y,z) = 1 / sqrt(x^2 + y^2 + z^2)

@@ -8,7 +8,7 @@ namespace numc {
 
 /// @brief The independent variable x — shorthand for func<>::x().
 /// @code
-/// auto x = numc::x;
+/// auto x = funcv::x;
 /// func f = sin(x) * exp(-0.1 * x);
 /// @endcode
 

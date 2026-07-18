@@ -20,6 +20,8 @@ int main() {
   param<double> b("b", 1.0);
   
   // Clean declarative mathematical syntax: f(x) = m*x + b
+  auto x = funcv::x;
+  
   func<double> f = m * x + b;
   std::cout << "f(x) = m*x + b" << std::endl;
   std::cout << "f(5) = " << f(5.0) << " (with m=" << m << ", b=" << b << ")" << std::endl;

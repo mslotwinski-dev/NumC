@@ -11,7 +11,7 @@ NumC to nowoczesna biblioteka obliczeń naukowych. Definiujesz funkcje jak w not
 using namespace numc;
 
 int main() {
-  auto x = numc::x();
+  auto x = funcv::x();
 
   func f1 = sin(x) * (x / 2.0);
   func f2 = exp(-0.1 * x) * cos(x) * 5.0;

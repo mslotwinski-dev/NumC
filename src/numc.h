@@ -54,8 +54,8 @@
 // Optimalization
 
 #include "optimalization/solvers/roots.hpp"
-#include "optimalization/solvers/minimization.hpp"
-#include "optimalization/solvers/least_squares.hpp"
+#include "optimalization/minimization.hpp"
+#include "optimalization/least_squares.hpp"
 
 // Differential Equations
 

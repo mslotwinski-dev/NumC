@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../common/vector.hpp"
-#include "../../common/tensor.hpp"
-#include "../../linear_algebra/solvers.hpp"
-#include "../../inc.hpp"
-#include "../../utility/log.hpp"
+#include "../common/vector.hpp"
+#include "../common/tensor.hpp"
+#include "../linear_algebra/solvers.hpp"
+#include "../inc.hpp"
+#include "../utility/log.hpp"
 
 namespace numc {
 namespace optimalization {

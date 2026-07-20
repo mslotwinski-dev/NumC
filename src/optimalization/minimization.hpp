@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../common/vector.hpp"
-#include "../../common/function.hpp"
-#include "../../inc.hpp"
-#include "../../utility/log.hpp"
+#include "../common/vector.hpp"
+#include "../common/function.hpp"
+#include "../inc.hpp"
+#include "../utility/log.hpp"
 
 namespace numc {
 namespace optimalization {

@@ -19,11 +19,11 @@ int main() {
   dashboard.add_scatter(data_x, data_y, "Pomiary z czujnika");
 
   dashboard.show(PlotTheme::LIGHT);
-  dashboard.show(PlotBackend::SVG, PlotTheme::LIGHT);   // Zapis SVG idealny do publikacji
-  dashboard.show(PlotBackend::WEB);                     //  A tu interaktywny
+  // dashboard.show(PlotBackend::SVG, PlotTheme::LIGHT);   // Zapis SVG idealny do publikacji
+  // dashboard.show(PlotBackend::WEB);                     //  A tu interaktywny
 
   // 3. FAST PLOT: Szybkie rysowanie w okienku (korzysta z domyślnych ustawień -   WINDOW, DARK)
-  plt::show<double>({f1, f2}, -10.0, 10.0, "Szybki wykres (Okienko)", "Czas [ms]", "Amplituda [V]");
+  // plt::show<double>({f1, f2}, -10.0, 10.0, "Szybki wykres (Okienko)", "Czas [ms]", "Amplituda [V]");
 
   return 0;
 }

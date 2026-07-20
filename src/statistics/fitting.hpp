@@ -4,7 +4,7 @@
 #include "../common/vector.hpp"
 #include "../common/tensor.hpp"
 #include "param.hpp"
-#include "../optimalization/solvers/least_squares.hpp"
+#include "../optimalization/least_squares.hpp"
 #include <vector>
 #include <functional>
 

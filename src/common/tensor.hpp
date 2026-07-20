@@ -177,13 +177,19 @@ class tensor {
 
     tensor result({rows, cols});
 
+    const T* A = this->_data.data();
+    const T* B = other._data.data();
+    T* C = result._data.data();
+
     for (size_t i = 0; i < rows; ++i) {
-      for (size_t j = 0; j < cols; ++j) {
-        T sum = T(0.0);
-        for (size_t k = 0; k < common_dim; ++k) {
-          sum += (*this)(i, k) * other(k, j);
+      size_t i_common = i * common_dim;
+      size_t i_cols = i * cols;
+      for (size_t k = 0; k < common_dim; ++k) {
+        T a_ik = A[i_common + k];
+        size_t k_cols = k * cols;
+        for (size_t j = 0; j < cols; ++j) {
+          C[i_cols + j] += a_ik * B[k_cols + j];
         }
-        result(i, j) = sum;
       }
     }
     return result;

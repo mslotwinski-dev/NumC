@@ -1,8 +1,8 @@
 <div align="center">
 
-# **NumC** &nbsp;⚡
+<img src="public/logo.png">
 
-### The Ultimate Zero-Dependency Mathematics & Scientific Computing Framework for Modern C++
+### The Ultimate Mathematics & Scientific Computing Framework for Modern C++
 
 *Write math the way you think it — not the way your compiler demands it.*
 
